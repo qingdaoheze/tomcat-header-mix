@@ -1,3 +1,4 @@
+To reproduce the issue described in the bug: https://bz.apache.org/bugzilla/show_bug.cgi?id=69479
 1. Start the tomcat server through: tomcat-server/src/main/java/org/debug/tomcat/Application.java
 2. Invoke it through the client: client/src/main/java/org/debug/client/JettyHttp2Client.java
 
@@ -24,3 +25,6 @@ Exception in thread "http-nio-8080-exec-2" java.lang.NumberFormatException: For 
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.lang.Thread.run(Thread.java:748)
 ```
+
+Note: To make this problem easier to reproduce, I modified this method
+org.apache.tomcat.util.http.MimeHeaders.getUniqueValue
