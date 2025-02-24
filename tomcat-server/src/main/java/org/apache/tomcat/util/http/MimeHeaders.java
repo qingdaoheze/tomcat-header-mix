@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Enumeration;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.tomcat.util.buf.MessageBytes;
 import org.apache.tomcat.util.res.StringManager;
@@ -355,8 +356,16 @@ public class MimeHeaders {
      */
     public MessageBytes getUniqueValue(String name) {
         MessageBytes result = null;
+        boolean isContentLength = "content-length".equals(name);
         for (int i = 0; i < count; i++) {
             if (headers[i].getName().equalsIgnoreCase(name)) {
+                if (isContentLength) {
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(100);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
                 if (result == null) {
                     result = headers[i].getValue();
                 } else {
