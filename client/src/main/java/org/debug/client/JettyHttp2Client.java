@@ -38,7 +38,7 @@ public class JettyHttp2Client {
         http2Client.setRemoveIdleDestinations(true);
         http2Client.start();
         try {
-            for (int i = 0; i < 10000; i++) {
+            for (int i = 0; i < 3; i++) {
                 Request request = http2Client.newRequest("http://localhost:8080/debug")
                         .method("POST");
                 request.header("x-forwarded-for", "10.117.168.145");
